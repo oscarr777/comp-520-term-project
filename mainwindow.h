@@ -30,6 +30,11 @@ private slots:
     void on_returnFromUpdatePushButton_clicked();
     void on_returnFromDeletePushButton_clicked();
     void on_connectToDatabasePushButton_clicked();
+    void on_createRecordPushButton_clicked();
+    void on_verifyDeleteRecordPushButton_clicked();
+    void on_deleteRecordPushButton_clicked();
+    void on_lokkupReadPushButton_clicked();
+    void on_updateRecordPushButton_clicked();
 private:
     Ui::MainWindow *ui;
 };

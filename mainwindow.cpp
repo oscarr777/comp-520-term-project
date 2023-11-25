@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QStyle>
 #include <iostream>
+#include <QSqlRecord>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -48,7 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
             qDebug() << "Database Name env variable not set!";
         if (hostValue == NULL)
             qDebug() << "Hostname env variable not set!";
-
     }
 
     if (db.open())
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << "Could not open db";
     }
     //Test query to verify successful connection
-    QString query = (QLatin1String("select INV_SUBTOTAL from INVOICE WHERE INV_NUMBER=1002"));
+    QString query = (QLatin1String("select budget from Film_Box_Office WHERE movie_id=7"));
     QSqlQuery qry;
     qry.prepare(query);
     qry.executedQuery();
@@ -93,6 +93,250 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_createRecordPushButton_clicked()
+{
+    QString movieId = ui->movieIdLineEdit->text();
+    QString facenumber = ui->facenumberLineEdit->text();
+    QString budget = ui->budgetLineEdit->text();
+    QString gross = ui->grossLineEdit->text();
+/*
+    QString queryConcat1 = "INSERT INTO Film VALUES" "('" + movieId + "')";
+    qDebug() << queryConcat1;
+    QString query1;
+    QSqlQuery qry1;
+    qry1.prepare(queryConcat1);
+    qry1.executedQuery();
+
+    if (qry1.exec())
+    {
+        qDebug() << "Query executed";
+        ui->queryExecutionStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+        ui->queryExecutionStatusLabel->setText("Executed");
+        while (qry1.next())
+        {
+            QString inputWord = qry1.value(0).toString();
+            qDebug() << inputWord;
+        }
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+        ui->queryExecutionStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        ui->queryExecutionStatusLabel->setText("Failed");
+    }
+*/
+
+    QString queryConcat2 = "INSERT INTO Film_Box_Office VALUES"  "('" + movieId + "', " "'" + facenumber + "', " "'" + budget + "', " "'" + gross + "')";
+    qDebug() << queryConcat2;
+    QString query2;
+    QSqlQuery qry2;
+    qry2.prepare(queryConcat2);
+    qry2.executedQuery();
+
+    if (qry2.exec())
+    {
+        qDebug() << "Query executed";
+        while (qry2.next())
+        {
+            QString inputWord = qry2.value(0).toString();
+            qDebug() << inputWord;
+        }
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+    }
+}
+
+void MainWindow::on_lokkupReadPushButton_clicked()
+{
+    QString movieId = ui->lookupLineEdit->text();
+    QString queryConcat = "SELECT * FROM Film_Box_Office WHERE movie_id=" + movieId;
+    qDebug() << queryConcat;
+    QString query;
+    QSqlQuery qry;
+
+    QSqlRecord record = db.record("Film_Box_Office");
+
+    qry.prepare(queryConcat);
+    qry.executedQuery();
+
+    if (qry.exec())
+    {
+        qDebug() << "Query executed";
+        qDebug() << "Number of fields: " << record.count();
+        while (qry.next())
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                QString inputWord = qry.value(i).toString();
+                qDebug() << inputWord;
+
+                switch(i)
+                {
+                    case 0:
+                        ui->movieIdLookupLabel->setStyleSheet("");
+                        ui->movieIdLookupLabel->setText(inputWord);
+                        break;
+                    case 1:
+                        ui->facenumberLookupLabel->setStyleSheet("");
+                        ui->facenumberLookupLabel->setText(inputWord);
+                        break;
+                    case 2:
+                        ui->grossLookupLabel->setStyleSheet("");
+                        ui->grossLookupLabel->setText(inputWord);
+                        break;
+                    case 3:
+                        ui->budgetLookupLabel->setStyleSheet("");
+                        ui->budgetLookupLabel->setText(inputWord);
+                        break;
+                    default:
+                        qDebug() << "Invalid index";
+                        break;
+
+
+                }
+
+            }
+        }
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+    }
+}
+
+void MainWindow::on_updateRecordPushButton_clicked()
+{
+    QString movieId = ui->movieIdUpdateLineEdit->text();
+    QString facenumber = ui->facenumberUpdateLineEdit->text();
+    QString budget = ui->budgetUpdateLineEdit->text();
+    QString gross = ui->grossUpdateLineEdit->text();
+
+    QString queryConcat = "UPDATE Film_Box_Office SET " "facenumber_in_poster=" + facenumber + ", budget=" + budget + ", gross=" + gross + " WHERE movie_id=" + movieId;
+    qDebug() << queryConcat;
+    QString query;
+    QSqlQuery qry;
+    qry.prepare(queryConcat);
+    qry.executedQuery();
+
+    if (qry.exec())
+    {
+        qDebug() << "Query executed";
+        ui->updateRecordStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+        ui->updateRecordStatusLabel->setText("Executed");
+        while (qry.next())
+        {
+            QString inputWord = qry.value(0).toString();
+            qDebug() << inputWord;
+        }
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+        ui->updateRecordStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        ui->updateRecordStatusLabel->setText("Failed");
+    }
+}
+
+void MainWindow::on_verifyDeleteRecordPushButton_clicked()
+{
+    QString movieId = ui->movieIdDeleteLineEdit->text();
+    QString queryConcat = "SELECT * FROM Film_Box_Office WHERE movie_id=" + movieId;
+    qDebug() << queryConcat;
+    QString query;
+    QSqlQuery qry;
+
+    QSqlRecord record = db.record("Film_Box_Office");
+
+    qry.prepare(queryConcat);
+    qry.executedQuery();
+
+    if (qry.exec())
+    {
+        qDebug() << "Query executed";
+        qDebug() << "Number of fields: " << record.count();
+        while (qry.next())
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                QString inputWord = qry.value(i).toString();
+                qDebug() << inputWord;
+
+                switch(i)
+                {
+                    case 0:
+                        ui->movieIdDeleteLabel->setStyleSheet("");
+                        ui->movieIdDeleteLabel->setText(inputWord);
+                        break;
+                    case 1:
+                        ui->facenumberDeleteLabel->setStyleSheet("");
+                        ui->facenumberDeleteLabel->setText(inputWord);
+                        break;
+                    case 2:
+                        ui->grossDeleteLabel->setStyleSheet("");
+                        ui->grossDeleteLabel->setText(inputWord);
+                        break;
+                    case 3:
+                        ui->budgetDeleteLabel->setStyleSheet("");
+                        ui->budgetDeleteLabel->setText(inputWord);
+                        break;
+                    default:
+                        qDebug() << "Invalid index";
+                        break;
+
+
+                }
+            }
+        }
+        ui->deleteRecordStatusLabel->setText("Executed");
+        ui->deleteRecordStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+    }
+
+    else
+    {
+        ui->deleteRecordStatusLabel->setText("Failed");
+        ui->deleteRecordStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        qDebug() << "Query failed";
+    }
+}
+
+void MainWindow::on_deleteRecordPushButton_clicked()
+{
+    QString movieId = ui->movieIdDeleteLineEdit->text();
+
+    QString queryConcat = "DELETE FROM Film_Box_Office WHERE movie_id=" + movieId;
+    qDebug() << queryConcat;
+    QString query;
+    QSqlQuery qry;
+    qry.prepare(queryConcat);
+    qry.executedQuery();
+
+    if (qry.exec())
+    {
+        qDebug() << "Query executed";
+        ui->queryExecutionStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+        ui->queryExecutionStatusLabel->setText("Executed");
+        while (qry.next())
+        {
+            QString inputWord = qry.value(0).toString();
+            qDebug() << inputWord;
+        }
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+        ui->queryExecutionStatusLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        ui->queryExecutionStatusLabel->setText("Failed");
+    }
+}
+
 
 void MainWindow::on_connectToDatabasePushButton_clicked()
 {
