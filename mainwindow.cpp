@@ -5,12 +5,70 @@
 #include <QDebug>
 #include <QStyle>
 #include <iostream>
+#include <QSqlRecord>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->customerStateComboBox->addItem("AL");
+    ui->customerStateComboBox->addItem("AK");
+    ui->customerStateComboBox->addItem("AZ");
+    ui->customerStateComboBox->addItem("AR");
+    ui->customerStateComboBox->addItem("CA");
+    ui->customerStateComboBox->addItem("CO");
+    ui->customerStateComboBox->addItem("CT");
+    ui->customerStateComboBox->addItem("DE");
+    ui->customerStateComboBox->addItem("DC");
+    ui->customerStateComboBox->addItem("FL");
+    ui->customerStateComboBox->addItem("GA");
+    ui->customerStateComboBox->addItem("HI");
+    ui->customerStateComboBox->addItem("ID");
+    ui->customerStateComboBox->addItem("IL");
+    ui->customerStateComboBox->addItem("IN");
+    ui->customerStateComboBox->addItem("IA");
+    ui->customerStateComboBox->addItem("KS");
+    ui->customerStateComboBox->addItem("KY");
+    ui->customerStateComboBox->addItem("LA");
+    ui->customerStateComboBox->addItem("ME");
+    ui->customerStateComboBox->addItem("MD");
+    ui->customerStateComboBox->addItem("MA");
+    ui->customerStateComboBox->addItem("MI");
+    ui->customerStateComboBox->addItem("MN");
+    ui->customerStateComboBox->addItem("MS");
+    ui->customerStateComboBox->addItem("MO");
+    ui->customerStateComboBox->addItem("MT");
+    ui->customerStateComboBox->addItem("NE");
+    ui->customerStateComboBox->addItem("NV");
+    ui->customerStateComboBox->addItem("NH");
+    ui->customerStateComboBox->addItem("NJ");
+    ui->customerStateComboBox->addItem("NM");
+    ui->customerStateComboBox->addItem("NY");
+    ui->customerStateComboBox->addItem("NC");
+    ui->customerStateComboBox->addItem("ND");
+    ui->customerStateComboBox->addItem("OH");
+    ui->customerStateComboBox->addItem("OK");
+    ui->customerStateComboBox->addItem("OR");
+    ui->customerStateComboBox->addItem("PA");
+    ui->customerStateComboBox->addItem("PR");
+    ui->customerStateComboBox->addItem("RI");
+    ui->customerStateComboBox->addItem("SC");
+    ui->customerStateComboBox->addItem("SD");
+    ui->customerStateComboBox->addItem("TN");
+    ui->customerStateComboBox->addItem("TX");
+    ui->customerStateComboBox->addItem("UT");
+    ui->customerStateComboBox->addItem("VT");
+    ui->customerStateComboBox->addItem("VA");
+    ui->customerStateComboBox->addItem("VI");
+    ui->customerStateComboBox->addItem("WA");
+    ui->customerStateComboBox->addItem("WV");
+    ui->customerStateComboBox->addItem("WI");
+    ui->customerStateComboBox->addItem("WY");
+    ui->shippingMethodComboBox->addItem("Standard");
+    ui->shippingMethodComboBox->addItem("2 Day");
+    ui->shippingMethodComboBox->addItem("Next Day");
 
     // Passing in credentials through env variables
     char* envVarPass = "COMP520_DB_PASSWORD";
@@ -37,6 +95,10 @@ MainWindow::MainWindow(QWidget *parent)
         db.setDatabaseName(dbValue);
         db.setUserName(userValue);
         db.setPassword(passwdValue);
+        //qDebug() << "Username: " << userValue;
+        //qDebug() << "Password: " << passwdValue;
+        //qDebug() << "Hostname: " << hostValue;
+        //qDebug() << "Database: " << dbValue;
     }
     else
     {
@@ -94,27 +156,255 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_connectToDatabasePushButton_clicked()
+void MainWindow::on_employeeLoginPushButton_clicked()
 {
-    qDebug() << "connectToDbClicked";
+    QString employeeId = ui->employeeIdLineEdit->text();
+    QString employeePassword = ui->employeePasswordLineEdit->text();
 
-    db.setHostName(ui->dbHostNameLineEdit->text());
-    db.setDatabaseName(ui->dbNameLineEdit->text());
-    db.setUserName(ui->dbUsernameLineEdit->text());
-    db.setPassword(ui->dbUserPasswordLineEdit->text());
-    if (db.open())
+    QString queryConcat = "select * from employee_login where emp_id=" + employeeId;
+    qDebug() << queryConcat;
+    QString query;
+    QSqlQuery qry;
+
+    QSqlRecord record = db.record("employee_login");
+
+    qry.prepare(queryConcat);
+    qry.executedQuery();
+
+    if (qry.exec())
     {
-        qDebug() << "db open";
-        ui->connectionStatusLabel->setText("Connected");
+        qDebug() << "Query executed";
+        qDebug() << "Number of fields: " << record.count();
+        while (qry.next())
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                QString inputWord = qry.value(i).toString();
+                qDebug() << inputWord;
 
-        ui->connectionStatusLabel->setStyleSheet("font: 700 14pt \"Quicksand\"; color: rgb(76, 255, 73)");
-        ui->dbNameLabel->setText(db.databaseName());
+                switch(i)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        if (inputWord == employeePassword)
+                        {
+                            ui->employeeLoggedInLabel->setStyleSheet("font: 700 10pt \"Quicksand\"; color: rgb(0, 255, 0);");
+                            ui->employeeLoggedInLabel->setText("Employee ID: " + employeeId + " logged in");
+                            ui->welcomeEmployeeLine1Label->setText("");
+                            ui->welcomeEmployeeLine2Label->setText("");
+                        }
+                        else
+                        {
+                            ui->welcomeEmployeeLine1Label->setText("Invalid Credentials For:");
+                            ui->welcomeEmployeeLine2Label->setText(employeeId);
+                            ui->welcomeEmployeeLine2Label->setStyleSheet("font: 700 20pt \"Quicksand\"; color: rgb(255, 0, 0);");
+                        }
+                        break;
 
+                    default:
+                        qDebug() << "Invalid index";
+                        break;
+
+
+                }
+
+            }
+        }
     }
 
     else
-        qDebug() << "Could not open db";
+    {
+        qDebug() << "Query failed";
+    }
+}
 
+void MainWindow::on_lookupOrderPushButton_clicked()
+{
+    QString orderId = ui->orderIdLookupLineEdit->text();
+    QString customerId = ui->customerIdLookupLineEdit->text();
+
+    if (orderId == NULL && customerId != NULL)
+    {
+        qDebug() << "orderid null";
+        QString queryConcat = "select * from orders where customer_id=" + customerId;
+        qDebug() << queryConcat;
+        QString query;
+        QSqlQuery qry;
+
+        QSqlRecord record = db.record("orders");
+
+        qry.prepare(queryConcat);
+        qry.executedQuery();
+
+        if (qry.exec())
+        {
+            qDebug() << "Query executed";
+            qDebug() << "Number of fields: " << record.count();
+            while (qry.next())
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    QString inputWord = qry.value(i).toString();
+                    qDebug() << inputWord;
+
+                    switch(i)
+                    {
+                        case 0:
+                            ui->orderIdLookupLabel->setText(inputWord);
+                            break;
+                        case 1:
+                            ui->customerIdLookupLabel->setText(inputWord);
+                            break;
+                        case 2:
+                            ui->orderDateLookupLabel->setText(inputWord);
+                            break;
+                        case 3:
+                            //Not Needed for display
+                            break;
+                        case 4:
+                            ui->shippingIdLookupLabel->setText(inputWord);
+                            break;
+                        case 5:
+                            ui->fByEmployeeIdLookupLabel->setText(inputWord);
+                            break;
+
+                        default:
+                            qDebug() << "Invalid index";
+                            break;
+
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    else if (orderId != NULL && customerId == NULL)
+    {
+        qDebug() << "customerid null";
+        QString queryConcat = "select * from orders where order_id=" + orderId;
+        qDebug() << queryConcat;
+        QString query;
+        QSqlQuery qry;
+
+        QSqlRecord record = db.record("orders");
+
+        qry.prepare(queryConcat);
+        qry.executedQuery();
+
+        if (qry.exec())
+        {
+            qDebug() << "Query executed";
+            qDebug() << "Number of fields: " << record.count();
+            while (qry.next())
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    QString inputWord = qry.value(i).toString();
+                    qDebug() << inputWord;
+
+                    switch(i)
+                    {
+                        case 0:
+                            ui->orderIdLookupLabel->setText(inputWord);
+                            break;
+                        case 1:
+                            ui->customerIdLookupLabel->setText(inputWord);
+                            break;
+                        case 2:
+                            ui->orderDateLookupLabel->setText(inputWord);
+                            break;
+                        case 3:
+                            //Not Needed for display
+                            break;
+                        case 4:
+                            ui->shippingIdLookupLabel->setText(inputWord);
+                            break;
+                        case 5:
+                            ui->fByEmployeeIdLookupLabel->setText(inputWord);
+                            break;
+
+                        default:
+                            qDebug() << "Invalid index";
+                            break;
+
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    else if (orderId != NULL && customerId != NULL)
+    {
+        qDebug() << "none null, defaulting to orderid";
+        QString queryConcat = "select * from orders where order_id=" + orderId;
+        qDebug() << queryConcat;
+        QString query;
+        QSqlQuery qry;
+
+        QSqlRecord record = db.record("orders");
+
+        qry.prepare(queryConcat);
+        qry.executedQuery();
+
+        if (qry.exec())
+        {
+            qDebug() << "Query executed";
+            qDebug() << "Number of fields: " << record.count();
+            while (qry.next())
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    QString inputWord = qry.value(i).toString();
+                    qDebug() << inputWord;
+
+                    switch(i)
+                    {
+                        case 0:
+                            ui->orderIdLookupLabel->setText(inputWord);
+                            break;
+                        case 1:
+                            ui->customerIdLookupLabel->setText(inputWord);
+                            break;
+                        case 2:
+                            ui->orderDateLookupLabel->setText(inputWord);
+                            break;
+                        case 3:
+                            //Not Needed for display
+                            break;
+                        case 4:
+                            ui->shippingIdLookupLabel->setText(inputWord);
+                            break;
+                        case 5:
+                            ui->fByEmployeeIdLookupLabel->setText(inputWord);
+                            break;
+
+                        default:
+                            qDebug() << "Invalid index";
+                            break;
+
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    else if (orderId == NULL && customerId == NULL)
+    {
+        //error enter either id
+        ui->nullLookupLabel->setText("Error, enter an order id or customer id");
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+    }
 }
 
 void MainWindow::on_createEntryPushButton_clicked()

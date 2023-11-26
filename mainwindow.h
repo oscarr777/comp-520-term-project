@@ -29,7 +29,8 @@ private slots:
     void on_returnFromReadPushButton_clicked();
     void on_returnFromUpdatePushButton_clicked();
     void on_returnFromDeletePushButton_clicked();
-    void on_connectToDatabasePushButton_clicked();
+    void on_employeeLoginPushButton_clicked();
+    void on_lookupOrderPushButton_clicked();
 private:
     Ui::MainWindow *ui;
 };
