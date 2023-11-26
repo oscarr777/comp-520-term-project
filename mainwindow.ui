@@ -159,7 +159,7 @@ color: rgb(76, 255, 73);</string>
         <rect>
          <x>40</x>
          <y>20</y>
-         <width>411</width>
+         <width>391</width>
          <height>41</height>
         </rect>
        </property>
@@ -339,7 +339,7 @@ color: rgb(0, 0, 0);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>160</y>
          <width>181</width>
          <height>71</height>
         </rect>
@@ -358,7 +358,7 @@ background-color: rgb(30, 60, 131);
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>220</y>
+         <y>470</y>
          <width>181</width>
          <height>71</height>
         </rect>
@@ -376,7 +376,7 @@ background-color: rgb(30, 60, 131);
       <widget class="QPushButton" name="deleteEntryPushButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>240</x>
          <y>590</y>
          <width>181</width>
          <height>71</height>
@@ -395,7 +395,7 @@ background-color: rgb(30, 60, 131);
       <widget class="QPushButton" name="updateEntryPushButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>240</x>
          <y>400</y>
          <width>181</width>
          <height>71</height>
@@ -409,6 +409,23 @@ background-color: rgb(30, 60, 131);
        </property>
        <property name="text">
         <string>Update Orders</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_28">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>151</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 700 18pt &quot;Quicksand&quot;;
+color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string>Fullfillment</string>
        </property>
       </widget>
      </widget>
@@ -465,28 +482,11 @@ font: 700 20pt &quot;Quicksand&quot;;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="label_13">
-       <property name="geometry">
-        <rect>
-         <x>370</x>
-         <y>540</y>
-         <width>141</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-</string>
-       </property>
-       <property name="text">
-        <string>Order Price</string>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="customerPhoneNumberLineEdit">
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>450</y>
+         <y>560</y>
          <width>291</width>
          <height>61</height>
         </rect>
@@ -502,8 +502,8 @@ color: rgb(0, 0, 0);</string>
       <widget class="QLabel" name="label_17">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>290</y>
+         <x>30</x>
+         <y>350</y>
          <width>141</width>
          <height>21</height>
         </rect>
@@ -519,8 +519,8 @@ color: rgb(0, 0, 0);</string>
       <widget class="QLineEdit" name="customerEmailLineEdit">
        <property name="geometry">
         <rect>
-         <x>30</x>
-         <y>570</y>
+         <x>370</x>
+         <y>380</y>
          <width>291</width>
          <height>61</height>
         </rect>
@@ -537,7 +537,7 @@ color: rgb(0, 0, 0);</string>
        <property name="geometry">
         <rect>
          <x>370</x>
-         <y>410</y>
+         <y>520</y>
          <width>61</width>
          <height>21</height>
         </rect>
@@ -554,7 +554,7 @@ color: rgb(0, 0, 0);</string>
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>420</y>
+         <y>530</y>
          <width>161</width>
          <height>21</height>
         </rect>
@@ -570,25 +570,8 @@ font: 700 12pt &quot;Quicksand&quot;;</string>
       <widget class="QLineEdit" name="customerCityLineEdit">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>320</y>
-         <width>291</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="customerAddress3LineEdit">
-       <property name="geometry">
-        <rect>
          <x>30</x>
-         <y>320</y>
+         <y>380</y>
          <width>291</width>
          <height>61</height>
         </rect>
@@ -604,8 +587,8 @@ color: rgb(0, 0, 0);</string>
       <widget class="QLabel" name="label_42">
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>540</y>
+         <x>370</x>
+         <y>350</y>
          <width>161</width>
          <height>21</height>
         </rect>
@@ -622,7 +605,7 @@ font: 700 12pt &quot;Quicksand&quot;;</string>
        <property name="geometry">
         <rect>
          <x>370</x>
-         <y>160</y>
+         <y>190</y>
          <width>141</width>
          <height>21</height>
         </rect>
@@ -635,28 +618,11 @@ font: 700 12pt &quot;Quicksand&quot;;</string>
         <string>Address Line 2</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_16">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>290</y>
-         <width>141</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);
-</string>
-       </property>
-       <property name="text">
-        <string>Address Line 3</string>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="customerAddress1LineEdit">
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>190</y>
+         <y>220</y>
          <width>291</width>
          <height>61</height>
         </rect>
@@ -675,7 +641,7 @@ font: 14pt &quot;Quicksand&quot;;
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>160</y>
+         <y>190</y>
          <width>141</width>
          <height>21</height>
         </rect>
@@ -688,29 +654,11 @@ font: 700 12pt &quot;Quicksand&quot;;</string>
         <string>Address Line 1</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="orderPriceLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>370</x>
-         <y>570</y>
-         <width>291</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);
-</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="customerAddress2LineEdit">
        <property name="geometry">
         <rect>
          <x>370</x>
-         <y>190</y>
+         <y>220</y>
          <width>291</width>
          <height>61</height>
         </rect>
@@ -801,7 +749,7 @@ color: rgb(0, 0, 0);
        <property name="geometry">
         <rect>
          <x>540</x>
-         <y>410</y>
+         <y>520</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -818,7 +766,7 @@ color: rgb(0, 0, 0);
        <property name="geometry">
         <rect>
          <x>532</x>
-         <y>450</y>
+         <y>560</y>
          <width>131</width>
          <height>61</height>
         </rect>
@@ -849,23 +797,6 @@ color: rgb(0, 0, 0);</string>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QLabel" name="label_12">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>210</y>
-          <width>201</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);
-</string>
-        </property>
-        <property name="text">
-         <string>Order Status Code</string>
-        </property>
-       </widget>
        <widget class="QLineEdit" name="orderIdLineEdit">
         <property name="geometry">
          <rect>
@@ -883,28 +814,11 @@ color: rgb(0, 0, 0);</string>
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="orderStatusCodeLineEdit">
-        <property name="geometry">
-         <rect>
-          <x>200</x>
-          <y>210</y>
-          <width>113</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_9">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>120</y>
+          <y>140</y>
           <width>141</width>
           <height>21</height>
          </rect>
@@ -921,24 +835,7 @@ color: rgb(0, 0, 0);</string>
         <property name="geometry">
          <rect>
           <x>200</x>
-          <y>120</y>
-          <width>113</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="customerPaymentMethodLineEdit">
-        <property name="geometry">
-         <rect>
-          <x>200</x>
-          <y>160</y>
+          <y>140</y>
           <width>113</width>
           <height>25</height>
          </rect>
@@ -968,23 +865,6 @@ color: rgb(0, 0, 0);</string>
          <string>Order ID</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_11">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>157</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);
-</string>
-        </property>
-        <property name="text">
-         <string>Payment Method</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_43">
         <property name="geometry">
          <rect>
@@ -1006,7 +886,7 @@ color: rgb(0, 0, 0);</string>
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>248</y>
+          <y>210</y>
           <width>181</width>
           <height>31</height>
          </rect>
@@ -1023,7 +903,7 @@ color: rgb(0, 0, 0);</string>
         <property name="geometry">
          <rect>
           <x>200</x>
-          <y>250</y>
+          <y>212</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -1047,12 +927,29 @@ background-color: rgb(30, 60, 131);
          <string>Submit Order</string>
         </property>
        </widget>
+       <widget class="QLabel" name="orderSubmissionLabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>310</y>
+          <width>261</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);
+font: 700 14pt &quot;Quicksand&quot;;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
       <widget class="QComboBox" name="customerStateComboBox">
        <property name="geometry">
         <rect>
          <x>370</x>
-         <y>450</y>
+         <y>560</y>
          <width>131</width>
          <height>61</height>
         </rect>

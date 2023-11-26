@@ -159,6 +159,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_employeeLoginPushButton_clicked()
 {
     QString employeeId = ui->employeeIdLineEdit->text();
+    employeeIdGlobal = employeeId;
+
     QString employeePassword = ui->employeePasswordLineEdit->text();
 
     QString queryConcat = "select * from employee_login where emp_id=" + employeeId;
@@ -404,6 +406,104 @@ void MainWindow::on_lookupOrderPushButton_clicked()
     else
     {
         qDebug() << "Query failed";
+    }
+}
+
+void MainWindow::on_createOrderPushButton_clicked()
+{
+    QString customerFName = ui->customerFnameLineEdit->text();
+    QString customerLName = ui->customerLnameLineEdit->text();
+    QString customerAddress = ui->customerAddress1LineEdit->text();
+    QString customerStreet = ui->customerAddress2LineEdit->text();
+    QString customerCity = ui->customerCityLineEdit->text();
+    QString customerState = ui->customerStateComboBox->currentText();
+    QString customerPostalCode = ui->customerZipLineEdit->text();
+    QString customerEmail = ui->customerEmailLineEdit->text();
+    QString customerPhone = ui->customerPhoneNumberLineEdit->text();
+    QString customerCountry = "USA";
+    QString customerOrderDate = "2023-11-29";
+
+    QString customerId = ui->customerIdLineEdit->text();
+    QString orderId = ui->orderIdLineEdit->text();
+    QString queryConcat1 = "INSERT INTO oscarrci_warehouse.customer VALUES(" "'" + customerId + "', '" + customerFName + "', '" + customerLName + "', '" + customerEmail +  "', '" + customerPhone + "')";
+    qDebug() << queryConcat1;
+    QString query1;
+    QSqlQuery qry1;
+    qry1.prepare(queryConcat1);
+    qry1.executedQuery();
+
+    if (qry1.exec())
+    {
+        qDebug() << "Query executed";
+        ui->orderSubmissionLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+        ui->orderSubmissionLabel->setText("Executed");
+        while (qry1.next())
+        {
+            QString inputWord = qry1.value(0).toString();
+            qDebug() << inputWord;
+        }
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+        ui->orderSubmissionLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        ui->orderSubmissionLabel->setText("Failed");
+    }
+
+
+    QString queryConcat2 = "INSERT INTO oscarrci_warehouse.shipping_address VALUES(" "'" + customerId + "', '" + customerAddress + "', '" + customerStreet + "', '" + customerCity +
+            "', '" + customerState +  "', '" + customerPostalCode + "', '" + customerCountry + "')";
+    qDebug() << queryConcat2;
+    QString query2;
+    QSqlQuery qry2;
+    qry2.prepare(queryConcat2);
+    qry2.executedQuery();
+
+    if (qry2.exec())
+    {
+        qDebug() << "Query executed";
+        while (qry2.next())
+        {
+            QString inputWord = qry2.value(0).toString();
+            qDebug() << inputWord;
+        }
+        ui->orderSubmissionLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+        ui->orderSubmissionLabel->setText("Executed");
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+        ui->orderSubmissionLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        ui->orderSubmissionLabel->setText("Failed");
+    }
+
+    QString queryConcat3 = "INSERT INTO orders(order_id, customer_id, order_date, shipping_add_id, emp_id) VALUES(" "'" + orderId + "', '" + customerId + "', '" + customerOrderDate + "', '" "1"
+            "', '" + employeeIdGlobal + "')";
+    qDebug() << queryConcat3;
+    QString query3;
+    QSqlQuery qry3;
+    qry3.prepare(queryConcat3);
+    qry3.executedQuery();
+
+    if (qry3.exec())
+    {
+        qDebug() << "Query executed";
+        while (qry3.next())
+        {
+            QString inputWord = qry3.value(0).toString();
+            qDebug() << inputWord;
+        }
+        ui->orderSubmissionLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(0, 255, 0)");
+        ui->orderSubmissionLabel->setText("Executed");
+    }
+
+    else
+    {
+        qDebug() << "Query failed";
+        ui->orderSubmissionLabel->setStyleSheet("font: 700 16pt \"Quicksand\"; color: rgb(255, 0, 0)");
+        ui->orderSubmissionLabel->setText("Failed");
     }
 }
 

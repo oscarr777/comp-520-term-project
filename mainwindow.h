@@ -18,6 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    QString employeeIdGlobal= 0;
 
 
 private slots:
@@ -31,6 +32,7 @@ private slots:
     void on_returnFromDeletePushButton_clicked();
     void on_employeeLoginPushButton_clicked();
     void on_lookupOrderPushButton_clicked();
+    void on_createOrderPushButton_clicked();
 private:
     Ui::MainWindow *ui;
 };
